@@ -5,41 +5,65 @@ import unittest
 # that is n copies of the original string.
 
 def string_times(string, n):
-    return
+    return "".join([string for i in range (0, n)])
 
 # Given an array of ints, return True if one of the first 4 elements
 # in the array is a 9. The array length may be less than 4.
 def array_front9(nums):
-    #longueur=min(len(nums) & 4)
-    return
+    length=min(len(nums), 4)
+    for i in nums[0: length]:
+        if i == 9:
+            return True
+    return False
 
 # Given a string, return the count of the number of times
 # that a substring length 2 appears  in the string and also as
 # the last 2 chars of the string, so "hixxxhi" yields 1 (we won't count the end substring).
 def last2(string):
-    return
+    if len(string) > 1:
+        sub = string[-2:]
+        rest = string[:-2]
+        return rest.count(sub)
+    else:
+        return 0
 
-#Write a proramm that returna dictionary of occurences of the alphabet for a given string.
+#Write a proramm that return a dictionary of occurences of the alphabet for a given string.
 # Test it with the Lorem upsuj
 #"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
 def occurences(text):
-  return
+    from string import ascii_lowercase
+    counts = {}
+    for c in text.lower():
+        if c in counts and c in ascii_lowercase:
+            counts[c] += 1
+        else:
+            counts[c] = 1
+    return counts
 
 #Write a program that maps a list of words into a list of
 #integers representing the lengths of the correponding words.
 def length_words(array):
-    return
+   return list(map(lambda w: len(w), array))
 
 
 #Write a function that takes a number and returns a list of its digits.
 def number2digits(number):
-  return
+  return list(map(lambda x: int(x), str(number)))
 
 #Write function that translates a text to Pig Latin and back.
 #English is translated to Pig Latin by taking the first letter of every word,
 #moving it to the end of the word and adding 'ay'
 def pigLatin(text):
-  return
+  new_words = []
+  words = text.split(" ")
+  first_word = words.pop(0)
+  new_words.append(first_word[1].upper() + first_word [2:] + first_word [0].lower() + "ay")
+  for w in words:
+      if len(w) > 1:
+          new_words.append(w[1:] + w[0] + "ay")
+      else:
+          new_words.append(w + "ay")
+  return " ".join(new_words)
 
 
 #write fizbuzz programm
@@ -49,7 +73,7 @@ def fizbuzz():
 
 response = {
   "nhits": 1000,
-  "parameters": {}
+  "parameters": {},
   "records": [
     {
       "datasetid": "les-1000-titres-les-plus-reserves-dans-les-bibliotheques-de-pret",
@@ -82,7 +106,14 @@ response = {
 
 #Given the above response object extract a array of records with columns nombre_de_reservations , auteur and timestamp
 def flatten():
-    return
+    result = []
+    for record in response['records']:
+        result.append({
+            'timestamp': record["record_timestamp"],
+            'auteur': record['fields']['auteur'],
+            'nombre_de_reservations': record['fields']['nombre_de_reservations'],
+        })
+    return result
 
 
 
